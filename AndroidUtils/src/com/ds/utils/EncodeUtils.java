@@ -53,13 +53,25 @@ public class EncodeUtils {
      * @param charset 编码方式
 	 * @throws UnsupportedEncodingException 
      */
-	public static String base64(String str, String charset) throws UnsupportedEncodingException{
-		String encoded = base64Encode(str.getBytes(charset));
+	public static String base64(String str, String charset) {
+		String encoded=null;
+		try {
+			encoded = base64Encode(str.getBytes(charset));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return encoded;    
 	}	
 	
-	public static String urlEncoder(String str, String charset) throws UnsupportedEncodingException{
-		String result = URLEncoder.encode(str, charset);
+	public static String urlEncoder(String str, String charset){
+		String result=null;
+		try {
+			result = URLEncoder.encode(str, charset);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return result;
 	}
 	/**
@@ -68,18 +80,24 @@ public class EncodeUtils {
      * @param charset 编码方式
 	 * @throws Exception 
      */
-	public static String MD5(String str, String charset) throws Exception {
-	    MessageDigest md = MessageDigest.getInstance("MD5");
-	    md.update(str.getBytes(charset));
-	    byte[] result = md.digest();
+	public static String MD5(String str, String charset) {
+	    MessageDigest md;
 	    StringBuffer sb = new StringBuffer(32);
-	    for (int i = 0; i < result.length; i++) {
-	        int val = result[i] & 0xff;
-	        if (val <= 0xf) {
-	            sb.append("0");
-	        }
-	        sb.append(Integer.toHexString(val));
-	    }
-	    return sb.toString().toLowerCase(Locale.CHINA);
+		try {
+			md = MessageDigest.getInstance("MD5");
+		    md.update(str.getBytes(charset));
+		    byte[] result = md.digest();
+		    for (int i = 0; i < result.length; i++) {
+		        int val = result[i] & 0xff;
+		        if (val <= 0xf) {
+		            sb.append("0");
+		        }
+		        sb.append(Integer.toHexString(val));
+		    }
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return sb.toString().toLowerCase(Locale.CHINA);
 	}
 }
